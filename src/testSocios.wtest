@@ -1,0 +1,44 @@
+import viaje.*
+import socios.*
+
+describe "tests de socios"{
+
+  	
+  	//viajes
+	const playa1 = new ViajeDePlaya(idiomas=#{"espaniol"}, largo=1000)
+	const playa2 = new ViajeDePlaya(idiomas=#{"espaniol"}, largo=2000)
+	const claseDeGimnasia = new ClaseDeGimnasia() 
+		//socio
+  	const roque= new Socio(actividades=#{playa1,playa2},maximoDeActividades=2,edad=40,idiomasQueHabla=#{"español"})
+  	const ana= new Socio(actividades=#{playa1,playa2},maximoDeActividades=3,edad=30,idiomasQueHabla=#{"español"})
+  	const juana= new SocioTranquilo(actividades=#{playa1,playa2},maximoDeActividades=3,edad=30,idiomasQueHabla=#{"español"})
+	const marcos= new SocioCoherente(actividades=#{playa1,playa2},maximoDeActividades=3,edad=40,idiomasQueHabla=#{"español"})
+	
+	
+  test "roque hizo 2 viajes y no puede hacer mas actividades" {
+
+	assert.that(roque.esAdoradorDelSol())
+	assert.equals(#{playa2},roque.actividadesEsforzadas())
+	roque.registrarActividad(claseDeGimnasia) //da error ya que no puede registrar mas actividades
+  }
+  
+  test "ana hizo los mismos viajes que roque y ademas pudo hacer la clase de gimnasia"{
+  		assert.that(ana.leInteresaActividad(claseDeGimnasia))
+  		ana.registrarActividad(claseDeGimnasia)
+  		assert.notThat(ana.esAdoradorDelSol())
+		assert.equals(#{playa2,claseDeGimnasia},ana.actividadesEsforzadas())
+  }
+  test "juana mismas caracteristicas que ana don la diferencia que es socio tranquilo"{
+  	 	assert.notThat(juana.leInteresaActividad(claseDeGimnasia))
+  		assert.that(juana.esAdoradorDelSol())
+		assert.equals(#{playa2},ana.actividadesEsforzadas())
+  }
+  
+  test "marcos mismas caracteristicas que roque pero es socio coherente y con una actividad posible mas"{
+  	assert.that(roque.esAdoradorDelSol())
+  	assert.that(marcos.leInteresaActividad(claseDeGimnasia))
+	marcos.registrarActividad(claseDeGimnasia)
+	assert.equals(#{playa2,claseDeGimnasia},marcos.actividadesEsforzadas())
+  }
+	
+}

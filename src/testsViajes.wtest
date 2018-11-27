@@ -1,0 +1,55 @@
+import viaje.*
+
+describe "tests de viajes"{
+	//viajes
+	const viajeAPlaya = new ViajeDePlaya(idiomas=#{"espaniol","portugues"}, largo= 500)
+	//viajes a ciudad
+	const excursionACiudad1 = new ExcursionACiudad(idiomas=#{"español"},atraccionesAVisitar=4)
+	const excursionACiudad2 = new ExcursionACiudad(idiomas=#{"español"},atraccionesAVisitar=8)
+	//viajes a ciudad tropical
+	const excursionACiudad3 = new ExcursionACiudadTropical(idiomas=#{"español"},atraccionesAVisitar=4)
+	const excursionACiudad4 = new ExcursionACiudadTropical(idiomas=#{"español"},atraccionesAVisitar=8)
+	//viajes de trekking
+	const salidaDeTrekking1 = new SalidaDeTrekking(idiomas= #{"italiano"}, kilometrosDeSenderos = 100, diasDeSolAlAnio=130)
+	const salidaDeTrekking2 = new SalidaDeTrekking(idiomas= #{"italiano"}, kilometrosDeSenderos = 50, diasDeSolAlAnio=240)
+	
+	test"viaje a la playa"{
+		assert.notThat(viajeAPlaya.implicaEsfuerzo())
+		assert.equals(1,viajeAPlaya.diasQueLleva())
+		assert.that(viajeAPlaya.sirveParaBroncearse())
+	}
+	
+	test "excursion a ciudad comun"{
+		//ciudad1 normal
+		assert.notThat(excursionACiudad1.implicaEsfuerzo())
+		assert.equals(2,excursionACiudad1.diasQueLleva())
+		assert.notThat(excursionACiudad1.sirveParaBroncearse())
+		//ciudad2 normal
+		assert.that(excursionACiudad2.implicaEsfuerzo())
+		assert.equals(4,excursionACiudad2.diasQueLleva())
+		assert.notThat(excursionACiudad2.sirveParaBroncearse())
+		
+	}
+	test "excursion a ciudad tropical"{
+		//ciudad3 tropical
+		assert.notThat(excursionACiudad3.implicaEsfuerzo())
+		assert.equals(3,excursionACiudad3.diasQueLleva())
+		assert.that(excursionACiudad3.sirveParaBroncearse())
+		//ciudad4 tropical
+		assert.that(excursionACiudad4.implicaEsfuerzo())
+		assert.equals(5,excursionACiudad4.diasQueLleva())
+		assert.that(excursionACiudad4.sirveParaBroncearse())
+	}
+	
+	test "salida de trekking"{
+		//salida1
+		assert.that(salidaDeTrekking1.implicaEsfuerzo())
+		assert.equals(2,salidaDeTrekking1.diasQueLleva())
+		assert.notThat(salidaDeTrekking1.sirveParaBroncearse())
+		//salida 2
+		assert.notThat(salidaDeTrekking2.implicaEsfuerzo())
+		assert.equals(1,salidaDeTrekking2.diasQueLleva())
+		assert.that(salidaDeTrekking2.sirveParaBroncearse())
+	}
+	
+}
